@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="QuietRoom" />
+    <meta name="description" content="A private end-to-end encrypted chat room app." />
+    <title>QuietRoom Private Chat</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="icon" href="./icons/icon-192.png" sizes="192x192" />
+    <link rel="stylesheet" href="./styles.css?v=2" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel setup-panel" id="setupPanel" aria-labelledby="setupTitle">
+        <p class="eyebrow">End-to-end encrypted</p>
+        <h1 id="setupTitle">QuietRoom</h1>
+        <p class="intro">Create a private room, share the invite link, and chat with messages encrypted before they leave your browser.</p>
+
+        <form id="setupForm" class="setup-form">
+          <label>
+            <span>Your name</span>
+            <input id="displayName" name="displayName" autocomplete="name" placeholder="Kai" required />
+          </label>
+          <label>
+            <span>Room name</span>
+            <input id="roomName" name="roomName" autocomplete="off" placeholder="weekend-plan" required />
+          </label>
+          <label>
+            <span>Private passphrase</span>
+            <input id="roomSecret" name="roomSecret" type="password" autocomplete="new-password" minlength="10" placeholder="Use a long phrase" required />
+          </label>
+          <label>
+            <span>Relay server URL</span>
+            <input id="relayUrl" name="relayUrl" type="url" autocomplete="off" placeholder="Same server, or https://your-relay.example.com" />
+          </label>
+          <button class="primary-button" type="submit">Enter private room</button>
+        </form>
+
+        <div class="privacy-notes">
+          <div>
+            <strong>Server sees</strong>
+            <span>room id, time, encrypted blobs</span>
+          </div>
+          <div>
+            <strong>Server cannot see</strong>
+            <span>message text or secret phrase</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel chat-panel" id="chatPanel" aria-labelledby="roomTitle" hidden>
+        <header class="chat-header">
+          <div>
+            <p class="eyebrow">Private room</p>
+            <h1 id="roomTitle">QuietRoom</h1>
+            <p id="connectionStatus" class="connection-status">Connecting...</p>
+          </div>
+          <button class="secondary-button" id="copyInviteButton" type="button">Copy invite</button>
+        </header>
+
+        <div class="messages" id="messages" aria-live="polite"></div>
+
+        <form id="messageForm" class="message-form">
+          <label class="message-label">
+            <span>Message</span>
+            <textarea id="messageInput" rows="2" placeholder="Type privately..." required></textarea>
+          </label>
+          <button class="primary-button" type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js?v=2"></script>
+  </body>
+</html>
