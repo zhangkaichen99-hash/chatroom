@@ -1,7 +1,9 @@
 const setupPanel = document.querySelector("#setupPanel");
 const chatPanel = document.querySelector("#chatPanel");
+const inviteForm = document.querySelector("#inviteForm");
 const setupForm = document.querySelector("#setupForm");
 const messageForm = document.querySelector("#messageForm");
+const inviteUrlInput = document.querySelector("#inviteUrl");
 const displayNameInput = document.querySelector("#displayName");
 const roomNameInput = document.querySelector("#roomName");
 const roomSecretInput = document.querySelector("#roomSecret");
@@ -195,14 +197,34 @@ function buildInviteUrl(roomId, secret) {
   return url.toString();
 }
 
-function readInviteFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+function parseInviteUrl(rawUrl) {
+  const url = new URL(rawUrl, window.location.href);
+  const params = new URLSearchParams(url.search);
+  const hashParams = new URLSearchParams(url.hash.slice(1));
   return {
     roomId: params.get("room") ?? "",
     relayUrl: params.get("relay") ?? "",
     secret: hashParams.get("secret") ?? "",
   };
+}
+
+function readInviteFromUrl() {
+  return parseInviteUrl(window.location.href);
+}
+
+function applyInvite(invite) {
+  if (!invite.roomId || !invite.secret) {
+    showToast("That invite link is missing a room or secret.");
+    return false;
+  }
+
+  roomNameInput.value = invite.roomId;
+  roomSecretInput.value = invite.secret;
+  relayUrlInput.value = invite.relayUrl || localStorage.getItem(RELAY_STORAGE_KEY) || "";
+  inviteUrlInput.value = "";
+  showToast("Invite loaded. Add your name to enter.");
+  displayNameInput.focus();
+  return true;
 }
 
 async function enterRoom({ displayName, roomId, secret, relayUrl }) {
@@ -244,6 +266,16 @@ setupForm.addEventListener("submit", async (event) => {
   }
 });
 
+inviteForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  try {
+    applyInvite(parseInviteUrl(inviteUrlInput.value.trim()));
+  } catch {
+    showToast("Paste a valid QuietRoom invite link.");
+  }
+});
+
 messageForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const text = messageInput.value.trim();
@@ -266,7 +298,5 @@ copyInviteButton.addEventListener("click", async () => {
 const invite = readInviteFromUrl();
 relayUrlInput.value = invite.relayUrl || localStorage.getItem(RELAY_STORAGE_KEY) || "";
 if (invite.roomId && invite.secret) {
-  roomNameInput.value = invite.roomId;
-  roomSecretInput.value = invite.secret;
-  showToast("Invite loaded. Add your name to enter.");
+  applyInvite(invite);
 }

@@ -36,6 +36,7 @@ icons/
 6. Tap Safari Share, then Add to Home Screen.
 
 Invite links include the relay URL when it is different from the GitHub Pages URL, so friends can open the same room.
+Friends can also paste the full invite link into **Invitation link** on the sign-in screen. QuietRoom fills the room, secret, and relay server for them, then they only add their name.
 
 ## Privacy Model
 

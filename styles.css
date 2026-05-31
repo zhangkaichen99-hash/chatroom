@@ -92,9 +92,19 @@ h1 {
   line-height: 1.6;
 }
 
-.setup-form {
+.setup-form,
+.invite-form {
   display: grid;
   gap: 16px;
+}
+
+.invite-form {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  border: 1px solid rgba(15, 118, 110, 0.2);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(15, 118, 110, 0.06);
 }
 
 label {
@@ -292,6 +302,7 @@ button {
 
   .chat-header,
   .message-form,
+  .invite-form,
   .privacy-notes {
     grid-template-columns: 1fr;
   }

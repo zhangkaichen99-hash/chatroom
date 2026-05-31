@@ -21,6 +21,14 @@
         <h1 id="setupTitle">QuietRoom</h1>
         <p class="intro">Create a private room, share the invite link, and chat with messages encrypted before they leave your browser.</p>
 
+        <form id="inviteForm" class="invite-form" aria-label="Join from invite link">
+          <label>
+            <span>Invitation link</span>
+            <input id="inviteUrl" name="inviteUrl" type="url" autocomplete="off" placeholder="Paste a QuietRoom invite link" />
+          </label>
+          <button class="secondary-button" type="submit">Use invite link</button>
+        </form>
+
         <form id="setupForm" class="setup-form">
           <label>
             <span>Your name</span>
@@ -76,6 +84,6 @@
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="./app.js?v=2"></script>
+    <script type="module" src="./app.js?v=3"></script>
   </body>
 </html>

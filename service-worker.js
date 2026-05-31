@@ -1,9 +1,9 @@
-const CACHE_NAME = "quietroom-v1";
+const CACHE_NAME = "quietroom-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=2",
-  "./app.js?v=2",
+  "./app.js?v=3",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
